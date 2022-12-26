@@ -39,4 +39,4 @@ npm run dev
 ### Authors
 
 - **Ahmad Shofi Hidayat** - Backend Developer - https://github.com/momo404
-- **Ahmad Shofi Hidayat** - Backend Developer - https://github.com/wardydev
+- **Hairul Wardi** - Frontend Developer - https://github.com/wardydev
