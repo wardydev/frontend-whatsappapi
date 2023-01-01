@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import { HiChatAlt2 } from "react-icons/hi";
+import Button from "../../src/components/Button";
+import GreetingAuth from "../../src/components/GreetingAuth";
+import InputField from "../../src/components/InputField";
+import Layout from "../../src/components/Layout";
 import usePost from "../../src/hooks/usePost";
 
 const Register = () => {
@@ -22,60 +27,57 @@ const Register = () => {
   const { handlePostData } = usePost("register", data, "/login");
 
   return (
-    <form
-      className="container"
-      style={{ width: 350 }}
-      onSubmit={(e) => handlePostData(e)}
-    >
-      <div className="mb-3">
-        <label htmlFor="masukkanNama" className="form-label">
-          Masukkan Nama
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="masukkanNama"
-          aria-describedby="name"
-          required
-          name="name"
-          value={value.name}
-          onChange={(e) => handleInputChange(e)}
+    <Layout>
+      <div style={{ marginTop: -100 }}>
+        <GreetingAuth
+          title="Yuk, Daftar dulu disini👋"
+          icon={<HiChatAlt2 color="#14BA6D" size={46} />}
         />
+        <form
+          className="card p-3"
+          style={{ width: 350 }}
+          onSubmit={(e) => handlePostData(e)}
+        >
+          <div className="mb-1">
+            <InputField
+              label="Nama"
+              type="text"
+              placeholder="Tambahkan Nama"
+              id="addName"
+              isRequired={true}
+              name="name"
+              value={value.name}
+              setValue={(e) => handleInputChange(e)}
+            />
+          </div>
+          <div className="mb-1">
+            <InputField
+              label="Email"
+              type="email"
+              placeholder="Tambahkan Email"
+              id="exampleInputEmail1"
+              isRequired={true}
+              name="email"
+              value={value.email}
+              setValue={(e) => handleInputChange(e)}
+            />
+          </div>
+          <div className="mb-3">
+            <InputField
+              label="Password"
+              type="password"
+              placeholder="Tambahkan Password"
+              id="password"
+              isRequired={true}
+              name="password"
+              value={value.password}
+              setValue={(e) => handleInputChange(e)}
+            />
+          </div>
+          <Button title="Daftar" />
+        </form>
       </div>
-      <div className="mb-3">
-        <label htmlFor="masukkanEmail" className="form-label">
-          Masukkan Email
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          id="masukkanEmail"
-          aria-describedby="emailHelp"
-          required
-          name="email"
-          value={value.email}
-          onChange={(e) => handleInputChange(e)}
-        />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="masukkanPassword" className="form-label">
-          Password
-        </label>
-        <input
-          type="password"
-          className="form-control"
-          id="masukkanPassword"
-          aria-describedby="password"
-          required
-          name="password"
-          value={value.password}
-          onChange={(e) => handleInputChange(e)}
-        />
-      </div>
-      <button type="submit" className="btn btn-primary">
-        Submit
-      </button>
-    </form>
+    </Layout>
   );
 };
 
