@@ -26,6 +26,7 @@ const InputField = ({
         name={name}
         value={value}
         onChange={setValue}
+        autoComplete="true"
       />
     </div>
   );

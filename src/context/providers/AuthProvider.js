@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 export const AuthContext = React.createContext();
 const AuthProvider = ({ children }) => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(null);
 
   return (
     <AuthContext.Provider value={{ email, setEmail }}>
