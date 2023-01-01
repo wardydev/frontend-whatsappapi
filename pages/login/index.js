@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { HiChatAlt2 } from "react-icons/hi";
+import Alert from "../../src/components/Alert";
 import Button from "../../src/components/Button";
 import GreetingAuth from "../../src/components/GreetingAuth";
 import InputField from "../../src/components/InputField";
 import Layout from "../../src/components/Layout";
+import Spinner from "../../src/components/Spinner";
 import usePost from "../../src/hooks/usePost";
 
 const Login = () => {
@@ -21,7 +23,15 @@ const Login = () => {
     email: value.email,
     password: value.password,
   };
-  const { handlePostData } = usePost("login", data, "/", true, "TOKEN");
+  const { handlePostData, isLoading, errorMessage } = usePost(
+    "login",
+    data,
+    "",
+    false,
+    true,
+    true,
+    "TOKEN"
+  );
   return (
     <Layout>
       <div style={{ marginTop: -100 }}>
@@ -30,6 +40,7 @@ const Login = () => {
           title="Yuk, Daftar dulu disini👋"
           icon={<HiChatAlt2 color="#14BA6D" size={46} />}
         />
+        {errorMessage !== "" && <Alert message={errorMessage} />}
         <form
           className="container"
           style={{ width: 350 }}
@@ -59,7 +70,10 @@ const Login = () => {
               setValue={(e) => handleInputchange(e)}
             />
           </div>
-          <Button title="Login" />
+          <Button
+            title={isLoading ? <Spinner /> : "Login"}
+            isDisabled={isLoading}
+          />
         </form>
       </div>
     </Layout>
