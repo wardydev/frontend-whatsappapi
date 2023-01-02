@@ -1,23 +1,6 @@
 import React, { useEffect, useState } from "react";
 import auth from "../src/api/auth";
-// export async function getServerSideProps() {
-//   const res = await axios.get("http://198.71.61.49:3333/auth/me", {
-//     headers: {
-//       Authorization: `Bearer ${
-//         typeof window !== "undefined"
-//           ? JSON.parse(localStorage.getItem("TOKEN"))
-//           : ""
-//       }`,
-//     },
-//   });
-//   const data = res.data;
-//   return {
-//     props: {
-//       data,
-//     },
-//   };
-// }
-
+import LayoutDashboard from "../src/components/LayoutDashboard";
 const Home = () => {
   const [user, setUser] = useState({});
 
@@ -40,15 +23,16 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      <ul className="list-group">
-        <li className="list-group-item">User Info</li>
-        <li className="list-group-item">{user.id}</li>
-        <li className="list-group-item">{user.name}</li>
-        <li className="list-group-item">{user.email}</li>
-        <li className="list-group-item">{user.updatedAt}</li>
+    <LayoutDashboard>
+      <ion-icon name="heart"></ion-icon>
+      <ul>
+        <li>User Info</li>
+        <li>{user.id}</li>
+        <li>{user.name}</li>
+        <li>{user.email}</li>
+        <li>{user.updatedAt}</li>
       </ul>
-    </div>
+    </LayoutDashboard>
   );
 };
 
