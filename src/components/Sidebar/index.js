@@ -11,7 +11,7 @@ const Sidebar = () => {
   const router = useRouter();
   return (
     <div
-      className={`d-flex flex-column justify-content-between py-4 ${styles.container}`}
+      className={`d-flex flex-column justify-content-between pb-4 pt-2 ${styles.container}`}
     >
       <div>
         <SidebarLogo />
