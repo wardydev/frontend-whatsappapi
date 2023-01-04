@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import auth from "../src/api/auth";
 import LayoutDashboard from "../src/components/LayoutDashboard";
-const Home = () => {
+import withAuth from "../src/hoc/withAuth";
+
+const Home = ({ token }) => {
   const [user, setUser] = useState({});
 
   const getUserInfo = async () => {
@@ -36,4 +38,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withAuth(Home);
