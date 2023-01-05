@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Button.module.css";
 
-const Button = ({ title, isDisabled = false }) => {
+const Button = ({ title, isDisabled = false, handleClick }) => {
   return (
     <>
       <button
@@ -12,6 +12,7 @@ const Button = ({ title, isDisabled = false }) => {
             : `${styles.btn} rounded`
         }
         disabled={isDisabled}
+        onClick={handleClick}
       >
         {title}
       </button>

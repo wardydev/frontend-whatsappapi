@@ -13,7 +13,7 @@ const InputField = ({
 }) => {
   return (
     <div className="d-flex flex-column">
-      <label htmlFor={id} className="form-label">
+      <label htmlFor={id} className="form-label fw-medium">
         {label}
       </label>
       <input
