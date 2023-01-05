@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "../../src/components/Button";
 import FormNumber from "../../src/components/DeviceComp/FormNumber";
 import LayoutDashboard from "../../src/components/LayoutDashboard";
@@ -8,18 +8,43 @@ import Table from "../../src/components/Table";
 import { DeviceContext } from "../../src/context/providers/DeviceProvider";
 import usePostData from "../../src/hooks/usePostData";
 import { STATUS_DEVICE_ACTIVE } from "../../src/utils/constants";
+import device from "../../src/api/device";
+import { replacePlusPhoneNumber } from "../../src/utils/functions";
 
 const Device = () => {
   const [isShowModal, setIsShowModal] = useState(false);
+  const [lists, setLists] = useState([]);
   const { waNumber, deviceModalActive } = useContext(DeviceContext);
   const data = {
-    number: waNumber,
+    number: replacePlusPhoneNumber(waNumber),
   };
   const { handlePostData, response, error, isLoading } = usePostData(
     "add",
     data,
     true
   );
+
+  const getListsDevice = async () => {
+    try {
+      const res = await device.get("list", {
+        headers: {
+          Authorization: `Bearer ${
+            typeof window !== "undefined" &&
+            JSON.parse(localStorage.getItem("TOKEN"))
+          }`,
+        },
+      });
+      if (res) {
+        setLists(res.data.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getListsDevice();
+  }, [lists]);
 
   const showFormActive = () => {
     switch (deviceModalActive) {
@@ -49,9 +74,13 @@ const Device = () => {
         </Modal>
       )}
       <div className="mb-3">
-        <Button title="Tambah" handleClick={() => setIsShowModal(true)} />
+        <Button
+          title="Tambah"
+          handleClick={() => setIsShowModal(true)}
+          isFullWidth={false}
+        />
       </div>
-      <Table />
+      <Table data={lists} />
     </LayoutDashboard>
   );
 };

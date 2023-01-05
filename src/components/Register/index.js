@@ -79,6 +79,7 @@ const Register = () => {
         <Button
           title={isLoading ? <Spinner /> : "Daftar"}
           isDisabled={isLoading}
+          isFullWidth={true}
         />
       </form>
     </div>

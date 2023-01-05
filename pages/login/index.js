@@ -73,6 +73,7 @@ const Login = () => {
           <Button
             title={isLoading ? <Spinner /> : "Login"}
             isDisabled={isLoading}
+            isFullWidth={true}
           />
         </form>
       </div>
