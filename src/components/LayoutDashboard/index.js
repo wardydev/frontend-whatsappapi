@@ -12,7 +12,7 @@ const LayoutDashboard = ({ children, isTripleColumn = false }) => {
         <Header />
         <div className={`row`}>
           <div
-            className={isTripleColumn ? "col-8 ps-5 pt-4" : "col-12 ps-5 pt-4"}
+            className={isTripleColumn ? "col-8 px-5 pt-4" : "col-12 px-5 pt-4"}
           >
             {children}
           </div>
