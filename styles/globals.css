@@ -47,3 +47,10 @@
 body {
   overflow-x: hidden;
 }
+.PhoneInputInput {
+    width: 100%;
+    padding: 0.7rem;
+    background-color: #F4F4F4;
+    border: 1px solid #C8C8C8;
+    outline: none;
+}

@@ -1,20 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import PhoneInput from "react-phone-number-input";
+import styles from "./Device.module.css";
+
 import { DeviceContext } from "../../context/providers/DeviceProvider";
 import InputField from "../InputField";
+import { replacePlusPhoneNumber } from "../../utils/functions";
 
 const FormNumber = () => {
   const { waNumber, setWaNumber } = useContext(DeviceContext);
   return (
     <form>
-      <div className="mb-3">
-        <InputField
-          label="Nomor WA"
-          type="number"
-          placeholder="Tambahkan Nomor Whatsapp"
-          id="waNumber"
-          name="waNumber"
+      <div>
+        <label htmlFor="phoneNumber" className="form-label fw-medium">
+          Tambahkan No. WA
+        </label>
+        <PhoneInput
+          placeholder="Enter phone number"
           value={waNumber}
-          setValue={(e) => setWaNumber(e.target.value)}
+          onChange={setWaNumber}
+          className={styles.input}
+          defaultCountry="ID"
         />
       </div>
     </form>
