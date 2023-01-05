@@ -40,6 +40,7 @@ const SendOtp = () => {
         <Button
           title={isLoading ? <Spinner /> : "Next"}
           isDisabled={isLoading}
+          isFullWidth={true}
         />
       </form>
     </div>

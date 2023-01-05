@@ -37,6 +37,7 @@ const Modal = ({
                 title={isLoadingbutton ? <Spinner /> : "Next"}
                 isDisabled={!waNumber}
                 handleClick={handleButtonModal}
+                isFullWidth={false}
               />
             </div>
           )}
