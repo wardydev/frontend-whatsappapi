@@ -8,13 +8,21 @@ import Table from "../../src/components/Table";
 import { DeviceContext } from "../../src/context/providers/DeviceProvider";
 import usePostData from "../../src/hooks/usePostData";
 import { STATUS_DEVICE_ACTIVE } from "../../src/utils/constants";
-import device from "../../src/api/device";
 import { replacePlusPhoneNumber } from "../../src/utils/functions";
+import Alert from "../../src/components/Alert";
+import Spinner from "../../src/components/Spinner";
 
 const Device = () => {
   const [isShowModal, setIsShowModal] = useState(false);
-  const [lists, setLists] = useState([]);
-  const { waNumber, deviceModalActive } = useContext(DeviceContext);
+  const {
+    waNumber,
+    deviceModalActive,
+    resDeleted,
+    lists,
+    getListsDevice,
+    isSuccess,
+    isLoadingDevice,
+  } = useContext(DeviceContext);
   const data = {
     number: replacePlusPhoneNumber(waNumber),
   };
@@ -23,24 +31,6 @@ const Device = () => {
     data,
     true
   );
-
-  const getListsDevice = async () => {
-    try {
-      const res = await device.get("list", {
-        headers: {
-          Authorization: `Bearer ${
-            typeof window !== "undefined" &&
-            JSON.parse(localStorage.getItem("TOKEN"))
-          }`,
-        },
-      });
-      if (res) {
-        setLists(res.data.data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   useEffect(() => {
     getListsDevice();
@@ -51,7 +41,12 @@ const Device = () => {
       case STATUS_DEVICE_ACTIVE.INPUT_NUMBER:
         return <FormNumber />;
       case STATUS_DEVICE_ACTIVE.ADD_QR_CODE:
-        return <ScanQrCode data={response} />;
+        return (
+          <ScanQrCode
+            data={response}
+            closeModal={() => setIsShowModal(false)}
+          />
+        );
       case STATUS_DEVICE_ACTIVE.FINISHED:
         return <h1>finished</h1>;
       default:
@@ -59,11 +54,19 @@ const Device = () => {
     }
   };
 
+  const titleModal = () => {
+    return (
+      (deviceModalActive === STATUS_DEVICE_ACTIVE.INPUT_NUMBER &&
+        "Tambahkan Nomor Wa") ||
+      (deviceModalActive === STATUS_DEVICE_ACTIVE.ADD_QR_CODE && "Scan QR Code")
+    );
+  };
+
   return (
     <LayoutDashboard>
       {isShowModal && (
         <Modal
-          title="Tambahkan Nomor Hp"
+          title={titleModal()}
           closeModal={() => setIsShowModal(false)}
           handleButtonModal={handlePostData}
           errorMessage={error}
@@ -73,6 +76,11 @@ const Device = () => {
           {showFormActive()}
         </Modal>
       )}
+      {isSuccess && (
+        <div>
+          <Alert message={resDeleted} theme="alert-success" />
+        </div>
+      )}
       <div className="mb-3">
         <Button
           title="Tambah"
@@ -81,6 +89,11 @@ const Device = () => {
         />
       </div>
       <Table data={lists} />
+      {isLoadingDevice && (
+        <div className="text-center">
+          <Spinner color="text-success" />
+        </div>
+      )}
     </LayoutDashboard>
   );
 };

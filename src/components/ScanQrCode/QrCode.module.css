@@ -1,0 +1,29 @@
+.camera {
+    max-width: 312px;
+    max-height: 312px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color:#14BA6Ded;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .camera::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    width: 200px;
+    height: 20px;
+    background-color: white;
+  }
+  .camera::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    width: 200px;
+    height: 20px;
+    background-color: white;
+  }
