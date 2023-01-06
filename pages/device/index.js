@@ -44,7 +44,7 @@ const Device = () => {
 
   useEffect(() => {
     getListsDevice();
-  }, [lists]);
+  }, []);
 
   const showFormActive = () => {
     switch (deviceModalActive) {

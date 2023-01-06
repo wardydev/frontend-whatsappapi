@@ -20,6 +20,8 @@ const FormNumber = () => {
           onChange={setWaNumber}
           className={styles.input}
           defaultCountry="ID"
+          international
+          countryCallingCodeEditable={false}
         />
       </div>
     </form>

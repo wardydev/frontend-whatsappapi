@@ -5,4 +5,9 @@ function replacePlusPhoneNumber(number) {
   return number.replace("+", "");
 }
 
-export { replacePlusPhoneNumber };
+function formatDate(date) {
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return date.toLocaleDateString("id-ID", options);
+}
+
+export { replacePlusPhoneNumber, formatDate };

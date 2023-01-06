@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDate } from "../../utils/functions";
 
 const Table = ({ data }) => {
   return (
@@ -22,7 +23,7 @@ const Table = ({ data }) => {
                 <td>{list.number}</td>
                 <td>{list.devicekey}</td>
                 <td>{list.status}</td>
-                <td>{list.createdAt}</td>
+                <td>{formatDate(new Date(list.createdAt))}</td>
                 <td>
                   <button className="btn btn-primary">Scan</button>
                 </td>
