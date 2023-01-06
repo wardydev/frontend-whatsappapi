@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { STATUS_DEVICE_ACTIVE } from "../../utils/constants";
+import device from "../../api/device";
 
 export const DeviceContext = React.createContext();
 const DeviceProvider = ({ children }) => {
@@ -7,10 +8,72 @@ const DeviceProvider = ({ children }) => {
   const [deviceModalActive, setDeviceModalActive] = useState(
     STATUS_DEVICE_ACTIVE.INPUT_NUMBER
   );
+  const [resDeleted, setResDeleted] = useState();
+  const [lists, setLists] = useState([]);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoadingDevice, setIdLoadingDevice] = useState(false);
+
+  const getListsDevice = async () => {
+    setIdLoadingDevice(true);
+    try {
+      const res = await device.get("list", {
+        headers: {
+          Authorization: `Bearer ${
+            typeof window !== "undefined" &&
+            JSON.parse(localStorage.getItem("TOKEN"))
+          }`,
+        },
+      });
+      if (res) {
+        setLists(res.data.data);
+        setIdLoadingDevice(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setIdLoadingDevice(false);
+    }
+  };
+
+  const deleteListDevice = async (deviceKey) => {
+    setIdLoadingDevice(true);
+    try {
+      const res = await device.delete(`delete/${deviceKey}`, {
+        headers: {
+          Authorization: `Bearer ${
+            typeof window !== "undefined" &&
+            JSON.parse(localStorage.getItem("TOKEN"))
+          }`,
+        },
+      });
+      if (res) {
+        getListsDevice();
+        setIsSuccess(true);
+        setIdLoadingDevice(false);
+        setResDeleted(res.data.message);
+        setTimeout(() => {
+          setIsSuccess(false);
+        }, 2500);
+      }
+    } catch (err) {
+      console.log(err);
+      setIdLoadingDevice(false);
+    }
+  };
 
   return (
     <DeviceContext.Provider
-      value={{ waNumber, setWaNumber, deviceModalActive, setDeviceModalActive }}
+      value={{
+        waNumber,
+        setWaNumber,
+        deviceModalActive,
+        setDeviceModalActive,
+        deleteListDevice,
+        resDeleted,
+        getListsDevice,
+        lists,
+        isSuccess,
+        isLoadingDevice,
+      }}
     >
       {children}
     </DeviceContext.Provider>
