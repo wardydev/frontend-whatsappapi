@@ -13,7 +13,6 @@ import Alert from "../../src/components/Alert";
 import Spinner from "../../src/components/Spinner";
 
 const Device = () => {
-  const [isShowModal, setIsShowModal] = useState(false);
   const {
     waNumber,
     deviceModalActive,
@@ -22,6 +21,9 @@ const Device = () => {
     getListsDevice,
     isSuccess,
     isLoadingDevice,
+    isShowModal,
+    setIsShowModal,
+    responseTable,
   } = useContext(DeviceContext);
   const data = {
     number: replacePlusPhoneNumber(waNumber),
@@ -36,6 +38,9 @@ const Device = () => {
     getListsDevice();
   }, []);
 
+  console.log(responseTable);
+  console.log("respons aja", response);
+
   const showFormActive = () => {
     switch (deviceModalActive) {
       case STATUS_DEVICE_ACTIVE.INPUT_NUMBER:
@@ -43,7 +48,7 @@ const Device = () => {
       case STATUS_DEVICE_ACTIVE.ADD_QR_CODE:
         return (
           <ScanQrCode
-            data={response}
+            data={responseTable.length !== 0 ? responseTable : response}
             closeModal={() => setIsShowModal(false)}
           />
         );

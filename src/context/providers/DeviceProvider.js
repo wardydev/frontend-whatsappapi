@@ -12,6 +12,8 @@ const DeviceProvider = ({ children }) => {
   const [lists, setLists] = useState([]);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoadingDevice, setIdLoadingDevice] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [responseTable, setResponseTable] = useState([]);
 
   const getListsDevice = async () => {
     setIdLoadingDevice(true);
@@ -60,6 +62,30 @@ const DeviceProvider = ({ children }) => {
     }
   };
 
+  const scanListDevice = async (id, number) => {
+    setDeviceModalActive(STATUS_DEVICE_ACTIVE.ADD_QR_CODE);
+    try {
+      const res = await device.post(
+        "add",
+        { number: number },
+        {
+          headers: {
+            Authorization: `Bearer ${
+              typeof window !== "undefined" &&
+              JSON.parse(localStorage.getItem("TOKEN"))
+            }`,
+          },
+        }
+      );
+      if (res) {
+        setResponseTable(res?.data.data);
+        setIsShowModal(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <DeviceContext.Provider
       value={{
@@ -73,6 +99,11 @@ const DeviceProvider = ({ children }) => {
         lists,
         isSuccess,
         isLoadingDevice,
+        scanListDevice,
+        isShowModal,
+        setIsShowModal,
+        responseTable,
+        setResponseTable,
       }}
     >
       {children}
