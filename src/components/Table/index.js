@@ -3,7 +3,7 @@ import { DeviceContext } from "../../context/providers/DeviceProvider";
 import { formatDate } from "../../utils/functions";
 
 const Table = ({ data }) => {
-  const { deleteListDevice } = useContext(DeviceContext);
+  const { deleteListDevice, scanListDevice } = useContext(DeviceContext);
   return (
     <div>
       <table className="table table-striped">
@@ -35,7 +35,14 @@ const Table = ({ data }) => {
                       Delete
                     </button>
                     {list.status === "connecting" && (
-                      <button className="btn btn-primary">Scan</button>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() =>
+                          scanListDevice(list.devicekey, list.number)
+                        }
+                      >
+                        Scan
+                      </button>
                     )}
                   </td>
                 </tr>
