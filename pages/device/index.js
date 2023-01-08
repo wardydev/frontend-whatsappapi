@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import { BiPlus } from "react-icons/bi";
+
 import Button from "../../src/components/Button";
 import FormNumber from "../../src/components/DeviceComp/FormNumber";
 import LayoutDashboard from "../../src/components/LayoutDashboard";
@@ -11,6 +13,7 @@ import { STATUS_DEVICE_ACTIVE } from "../../src/utils/constants";
 import { replacePlusPhoneNumber } from "../../src/utils/functions";
 import Alert from "../../src/components/Alert";
 import Spinner from "../../src/components/Spinner";
+import withAuth from "../../src/hoc/withAuth";
 
 const Device = () => {
   const {
@@ -37,9 +40,6 @@ const Device = () => {
   useEffect(() => {
     getListsDevice();
   }, []);
-
-  console.log(responseTable);
-  console.log("respons aja", response);
 
   const showFormActive = () => {
     switch (deviceModalActive) {
@@ -91,6 +91,7 @@ const Device = () => {
           title="Tambah"
           handleClick={() => setIsShowModal(true)}
           isFullWidth={false}
+          withIcon={<BiPlus size={22} />}
         />
       </div>
       <Table data={lists} />
@@ -103,4 +104,4 @@ const Device = () => {
   );
 };
 
-export default Device;
+export default withAuth(Device);

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { DeviceContext } from "../../context/providers/DeviceProvider";
 import { formatDate } from "../../utils/functions";
+import { BiTrash, BiQrScan } from "react-icons/bi";
 
 const Table = ({ data }) => {
   const { deleteListDevice, scanListDevice } = useContext(DeviceContext);
@@ -21,7 +22,7 @@ const Table = ({ data }) => {
           {data.length !== 0 &&
             data.map((list, index) => {
               return (
-                <tr>
+                <tr key={list.id}>
                   <th scope="row">{index + 1}</th>
                   <td>{list.number}</td>
                   <td>{list.devicekey}</td>
@@ -32,16 +33,14 @@ const Table = ({ data }) => {
                       className="btn btn-danger"
                       onClick={() => deleteListDevice(list.devicekey)}
                     >
-                      Delete
+                      <BiTrash size={16} />
                     </button>
                     {list.status === "connecting" && (
                       <button
-                        className="btn btn-primary"
-                        onClick={() =>
-                          scanListDevice(list.devicekey, list.number)
-                        }
+                        className="btn btn-success"
+                        onClick={() => scanListDevice(list.number)}
                       >
-                        Scan
+                        <BiQrScan size={16} />
                       </button>
                     )}
                   </td>
