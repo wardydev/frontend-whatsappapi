@@ -6,6 +6,7 @@ const Button = ({
   isDisabled = false,
   handleClick,
   isFullWidth = false,
+  withIcon,
 }) => {
   return (
     <>
@@ -21,7 +22,8 @@ const Button = ({
         disabled={isDisabled}
         onClick={handleClick}
       >
-        {title}
+        <span className="pe-2">{title}</span>
+        {withIcon ? withIcon : null}
       </button>
     </>
   );

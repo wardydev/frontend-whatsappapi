@@ -62,7 +62,7 @@ const DeviceProvider = ({ children }) => {
     }
   };
 
-  const scanListDevice = async (id, number) => {
+  const scanListDevice = async (number) => {
     setDeviceModalActive(STATUS_DEVICE_ACTIVE.ADD_QR_CODE);
     try {
       const res = await device.post(
