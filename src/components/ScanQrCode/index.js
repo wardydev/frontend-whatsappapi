@@ -7,32 +7,16 @@ import { DeviceContext } from "../../context/providers/DeviceProvider";
 import { STATUS_DEVICE_ACTIVE } from "../../utils/constants";
 
 const ScanQrCode = ({ data, closeModal }) => {
-  const [status, setStatus] = useState({});
-  const { getListsDevice, setDeviceModalActive, setWaNumber } =
-    useContext(DeviceContext);
-
-  const getStatus = async () => {
-    try {
-      const res = await device.get(`status/${data?.devicekey}`, {
-        headers: {
-          Authorization: `Bearer ${
-            typeof window !== "undefined" &&
-            JSON.parse(localStorage.getItem("TOKEN"))
-          }`,
-        },
-      });
-      console.log(res.data);
-
-      if (res) {
-        setStatus(res.data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const {
+    getListsDevice,
+    setDeviceModalActive,
+    setWaNumber,
+    status,
+    getStatus,
+  } = useContext(DeviceContext);
 
   useEffect(() => {
-    getStatus();
+    getStatus(data);
     if (status.status === "connected") {
       setTimeout(() => {
         getListsDevice();

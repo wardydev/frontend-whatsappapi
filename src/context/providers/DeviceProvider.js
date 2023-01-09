@@ -14,6 +14,7 @@ const DeviceProvider = ({ children }) => {
   const [isLoadingDevice, setIdLoadingDevice] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
   const [responseTable, setResponseTable] = useState([]);
+  const [status, setStatus] = useState({});
 
   const getListsDevice = async () => {
     setIdLoadingDevice(true);
@@ -86,6 +87,26 @@ const DeviceProvider = ({ children }) => {
     }
   };
 
+  const getStatus = async (data) => {
+    try {
+      const res = await device.get(`status/${data?.devicekey}`, {
+        headers: {
+          Authorization: `Bearer ${
+            typeof window !== "undefined" &&
+            JSON.parse(localStorage.getItem("TOKEN"))
+          }`,
+        },
+      });
+      console.log(res.data);
+
+      if (res) {
+        setStatus(res.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <DeviceContext.Provider
       value={{
@@ -104,6 +125,8 @@ const DeviceProvider = ({ children }) => {
         setIsShowModal,
         responseTable,
         setResponseTable,
+        getStatus,
+        status,
       }}
     >
       {children}
