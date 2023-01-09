@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { DeviceContext } from "../../context/providers/DeviceProvider";
 import { formatDate } from "../../utils/functions";
-import { BiTrash, BiQrScan } from "react-icons/bi";
+import { BiTrash, BiQrScan, BiRefresh } from "react-icons/bi";
 
 const Table = ({ data }) => {
-  const { deleteListDevice, scanListDevice } = useContext(DeviceContext);
+  const { deleteListDevice, scanListDevice, getStatus } =
+    useContext(DeviceContext);
   return (
     <div>
       <table className="table table-striped">
@@ -43,6 +44,12 @@ const Table = ({ data }) => {
                         <BiQrScan size={16} />
                       </button>
                     )}
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => getStatus(list)}
+                    >
+                      <BiRefresh size={24} />
+                    </button>
                   </td>
                 </tr>
               );

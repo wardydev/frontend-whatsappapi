@@ -1,19 +1,14 @@
 import React from "react";
-import { BiBell } from "react-icons/bi";
-import Image from "next/image";
+import { BiBell, BiUser } from "react-icons/bi";
 
 const Header = () => {
   return (
     <div className="py-3 d-flex justify-content-end pe-5 border-bottom">
-      <div>
+      <div className="d-flex align-items-center">
         <BiBell size={24} color="#14BA6D" />
-        <Image
-          src="https://cdn.pixabay.com/photo/2021/07/20/14/59/iron-man-6480952_960_720.jpg"
-          alt="user-profile"
-          width={35}
-          height={35}
-          className="rounded-circle ms-3"
-        />
+        <div className="bg-secondary text-white p-2 rounded-circle ms-3">
+          <BiUser size={24} />
+        </div>
       </div>
     </div>
   );

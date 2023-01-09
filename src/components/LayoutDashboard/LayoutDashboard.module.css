@@ -4,3 +4,10 @@
     padding-bottom: 56px;
     background-color: hsl(210, 17%, 97%);
 }
+.thirdColumn {
+    height: 100vh !important;
+    position: sticky ;
+    top: 0 ;
+    right: 0 ;
+    z-index: 99;
+  }

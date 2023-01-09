@@ -40,3 +40,17 @@
     border-radius: 50%;
     background-color: #14BA6D;
 }
+
+.menuChildActive {
+    color: #14BA6D !important;
+}
+.menuChildActive::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 35px;
+    height: 50%;
+    width: 3px;
+    transform: translateY(-50%);
+    background-color: #14BA6D;
+}
