@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 
 import styles from "./QrCode.module.css";
-import device from "../../api/device";
 import { DeviceContext } from "../../context/providers/DeviceProvider";
 import { STATUS_DEVICE_ACTIVE } from "../../utils/constants";
 
