@@ -14,32 +14,35 @@ import { replacePlusPhoneNumber } from "../../src/utils/functions";
 import Alert from "../../src/components/Alert";
 import Spinner from "../../src/components/Spinner";
 import withAuth from "../../src/hoc/withAuth";
+import CardDevice from "../../src/components/CardDevice";
+import useGetDeviceData from "../../src/hooks/useGetDeviceData";
+import other from "../../src/api/other";
 
 const Device = () => {
   const {
     waNumber,
+    name,
     deviceModalActive,
     resDeleted,
-    lists,
-    getListsDevice,
     isSuccess,
     isLoadingDevice,
     isShowModal,
     setIsShowModal,
     responseTable,
+    getDataMyPackage,
+    getListsDevice,
+    lists,
   } = useContext(DeviceContext);
   const data = {
     number: replacePlusPhoneNumber(waNumber),
+    name,
   };
   const { handlePostData, response, error, isLoading } = usePostData(
     "add",
     data,
     true
   );
-
-  useEffect(() => {
-    getListsDevice();
-  }, []);
+  const count = useGetDeviceData("getcount");
 
   const showFormActive = () => {
     switch (deviceModalActive) {
@@ -67,6 +70,15 @@ const Device = () => {
     );
   };
 
+  const addDevice = () => {
+    setIsShowModal(true);
+    getDataMyPackage();
+  };
+
+  useEffect(() => {
+    getListsDevice();
+  }, []);
+
   return (
     <LayoutDashboard>
       {isShowModal && (
@@ -86,10 +98,26 @@ const Device = () => {
           <Alert message={resDeleted} theme="alert-success" />
         </div>
       )}
+      <div className="mb-4 row">
+        <div className="col-6">
+          <CardDevice
+            count={count.data.data?.total}
+            title="Device"
+            imageSrc="./device.svg"
+          />
+        </div>
+        <div className="col-6">
+          <CardDevice
+            count={count.data.data?.connect}
+            title="Connect"
+            imageSrc="./connect.svg"
+          />
+        </div>
+      </div>
       <div className="mb-3">
         <Button
           title="Tambah"
-          handleClick={() => setIsShowModal(true)}
+          handleClick={addDevice}
           isFullWidth={false}
           withIcon={<BiPlus size={22} />}
         />

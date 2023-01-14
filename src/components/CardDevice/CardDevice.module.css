@@ -1,0 +1,15 @@
+.imgIllustration {
+    position: absolute;
+    right: 70px;
+    top: -70px;
+    transform: rotate(-20deg);
+}
+.count {
+    font-size: 2.75rem;
+    font-weight: bold;
+    color: #14BA6D;
+}
+.title {
+    opacity: 0.75;
+    margin-top: -10px;
+}
