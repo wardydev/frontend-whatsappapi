@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { STATUS_DEVICE_ACTIVE } from "../../utils/constants";
 import device from "../../api/device";
+import other from "../../api/other";
 
 export const DeviceContext = React.createContext();
 const DeviceProvider = ({ children }) => {
   const [waNumber, setWaNumber] = useState("");
+  const [name, setName] = useState("");
   const [deviceModalActive, setDeviceModalActive] = useState(
     STATUS_DEVICE_ACTIVE.INPUT_NUMBER
   );
@@ -15,6 +17,7 @@ const DeviceProvider = ({ children }) => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [responseTable, setResponseTable] = useState([]);
   const [status, setStatus] = useState({});
+  const [myPackage, setMyPackage] = useState([]);
 
   const getListsDevice = async () => {
     setIdLoadingDevice(true);
@@ -97,11 +100,25 @@ const DeviceProvider = ({ children }) => {
           }`,
         },
       });
-      console.log(res.data);
-
       if (res) {
         setStatus(res.data);
       }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getDataMyPackage = async () => {
+    try {
+      const res = await other.get("/", {
+        headers: {
+          Authorization: `Bearer ${
+            typeof window !== "undefined" &&
+            JSON.parse(localStorage.getItem("TOKEN"))
+          }`,
+        },
+      });
+      setMyPackage(res?.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -127,6 +144,10 @@ const DeviceProvider = ({ children }) => {
         setResponseTable,
         getStatus,
         status,
+        getDataMyPackage,
+        myPackage,
+        name,
+        setName,
       }}
     >
       {children}
