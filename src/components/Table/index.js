@@ -1,21 +1,21 @@
 import React, { useContext } from "react";
 import { DeviceContext } from "../../context/providers/DeviceProvider";
-import { formatDate } from "../../utils/functions";
-import { BiTrash, BiQrScan, BiRefresh } from "react-icons/bi";
+import { BiTrash, BiQrScan } from "react-icons/bi";
 
-const Table = ({ data }) => {
+const Table = ({ data, head }) => {
   const { deleteListDevice, scanListDevice } = useContext(DeviceContext);
   return (
     <div>
       <table className="table table-striped">
         <thead>
           <tr>
-            <th scope="col">NO</th>
-            <th scope="col">NAMA</th>
-            <th scope="col">PHONE NUMBER</th>
-            <th scope="col">DEVICE KEY</th>
-            <th scope="col">STATUS</th>
-            <th scope="col">ACTION</th>
+            {head.map((item, index) => {
+              return (
+                <th scope="col" key={index}>
+                  {item}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>

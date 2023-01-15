@@ -1,6 +1,13 @@
 import React from "react";
 
-const SwitchInput = ({ isDisable = true, setValue }) => {
+const SwitchInput = ({
+  isDisable = true,
+  setValue,
+  isTitle = false,
+  title,
+  defaultValue = false,
+  checked,
+}) => {
   return (
     <div className="form-check form-switch mb-3">
       <input
@@ -10,10 +17,14 @@ const SwitchInput = ({ isDisable = true, setValue }) => {
         id="flexSwitchCheckDefault"
         disabled={isDisable}
         onChange={setValue}
+        defaultChecked={defaultValue}
+        checked={checked}
       />
-      <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
-        Chatbot
-      </label>
+      {isTitle && (
+        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+          {title}
+        </label>
+      )}
     </div>
   );
 };

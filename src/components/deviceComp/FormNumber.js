@@ -45,6 +45,8 @@ const FormNumber = () => {
         <SwitchInput
           isDisable={myPackage?.Package?.config?.chatgpt === 0 ? true : false}
           setValue={() => setStatusPackage(!statusPackage)}
+          isTitle={true}
+          title="Chat Bot"
         />
       )}
       {myPackage?.Package?.config?.chatgpt === 1 && statusPackage && (

@@ -7,7 +7,7 @@ const SidebarLogo = () => {
     <div className="d-flex align-items-center justify-content-center gap-2 ps-3">
       <Link href="/">
         <Image
-          src="./wazoid-logo.svg"
+          src="/static/images/wazoid-logo.svg"
           alt="wazoid-logo"
           width={300}
           height={100}

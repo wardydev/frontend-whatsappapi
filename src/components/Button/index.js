@@ -22,8 +22,8 @@ const Button = ({
         disabled={isDisabled}
         onClick={handleClick}
       >
-        <span className="pe-2">{title}</span>
         {withIcon ? withIcon : null}
+        <span className="ps-2">{title}</span>
       </button>
     </>
   );
