@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { BiX } from "react-icons/bi";
-import { DeviceContext } from "../../context/providers/DeviceProvider";
-import { STATUS_DEVICE_ACTIVE } from "../../utils/constants";
 import Alert from "../Alert";
 import Button from "../Button";
 import Spinner from "../Spinner";
@@ -15,15 +13,11 @@ const Modal = ({
   handleButtonModal,
   errorMessage,
   isLoadingbutton,
+  titleButton,
   isShowFooter = true,
+  isButtonDisabled = true,
 }) => {
-  const { waNumber, setWaNumber, getListsDevice, setDeviceModalActive } =
-    useContext(DeviceContext);
-
   const handlCloseModal = () => {
-    getListsDevice();
-    setDeviceModalActive(STATUS_DEVICE_ACTIVE.INPUT_NUMBER);
-    setWaNumber("");
     closeModal();
   };
 
@@ -44,8 +38,8 @@ const Modal = ({
           {isShowFooter && (
             <div className="card-footer d-flex justify-content-end py-3">
               <Button
-                title={isLoadingbutton ? <Spinner /> : "Next"}
-                isDisabled={!waNumber}
+                title={isLoadingbutton ? <Spinner /> : titleButton}
+                isDisabled={!isButtonDisabled}
                 handleClick={handleButtonModal}
                 isFullWidth={false}
               />

@@ -1,4 +1,10 @@
-import { BiHomeSmile, BiCustomize, BiDevices, BiCodeAlt } from "react-icons/bi";
+import {
+  BiHomeSmile,
+  BiCustomize,
+  BiDevices,
+  BiCodeAlt,
+  BiRepost,
+} from "react-icons/bi";
 
 const STATUS_REGISTER_ACTIVE = {
   SEND_OTP: "SEND_OTP",
@@ -38,6 +44,13 @@ const MENUS = [
     route: "/device",
     icon: <BiDevices size={24} />,
     iconActive: <BiDevices size={24} color="#14BA6D" />,
+    menuChild: null,
+  },
+  {
+    title: "Auto Reply",
+    route: "/auto-reply",
+    icon: <BiRepost size={24} />,
+    iconActive: <BiRepost size={24} color="#14BA6D" />,
     menuChild: null,
   },
   {
@@ -146,10 +159,22 @@ const DATA_DOCS = [
   },
 ];
 
+const HEAD_DEVICE = [
+  "NO",
+  "NAMA",
+  "PHONE NUMBER",
+  "DEVICE KEY",
+  "STATUS",
+  "ACTION",
+];
+const HEAD_AUTOREPLY = ["NO", "NAMA", "NOMOR", "SETTING", "STATUS"];
+
 export {
   STATUS_REGISTER_ACTIVE,
   STATUS_DEVICE_ACTIVE,
   STATUS_DOCS,
   MENUS,
   DATA_DOCS,
+  HEAD_DEVICE,
+  HEAD_AUTOREPLY,
 };

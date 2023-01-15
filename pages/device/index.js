@@ -9,7 +9,7 @@ import ScanQrCode from "../../src/components/ScanQrCode";
 import Table from "../../src/components/Table";
 import { DeviceContext } from "../../src/context/providers/DeviceProvider";
 import usePostData from "../../src/hooks/usePostData";
-import { STATUS_DEVICE_ACTIVE } from "../../src/utils/constants";
+import { HEAD_DEVICE, STATUS_DEVICE_ACTIVE } from "../../src/utils/constants";
 import { replacePlusPhoneNumber } from "../../src/utils/functions";
 import Alert from "../../src/components/Alert";
 import Spinner from "../../src/components/Spinner";
@@ -21,6 +21,7 @@ import other from "../../src/api/other";
 const Device = () => {
   const {
     waNumber,
+    setWaNumber,
     name,
     deviceModalActive,
     resDeleted,
@@ -32,6 +33,7 @@ const Device = () => {
     getDataMyPackage,
     getListsDevice,
     lists,
+    setDeviceModalActive,
   } = useContext(DeviceContext);
   const data = {
     number: replacePlusPhoneNumber(waNumber),
@@ -79,16 +81,25 @@ const Device = () => {
     getListsDevice();
   }, []);
 
+  const handleCloseModal = () => {
+    setIsShowModal(false);
+    getListsDevice();
+    setDeviceModalActive(STATUS_DEVICE_ACTIVE.INPUT_NUMBER);
+    setWaNumber("");
+  };
+
   return (
     <LayoutDashboard>
       {isShowModal && (
         <Modal
           title={titleModal()}
-          closeModal={() => setIsShowModal(false)}
+          closeModal={() => handleCloseModal()}
           handleButtonModal={handlePostData}
           errorMessage={error}
           isLoadingbutton={isLoading}
+          titleButton="Next"
           isShowFooter={deviceModalActive !== STATUS_DEVICE_ACTIVE.ADD_QR_CODE}
+          isButtonDisabled={waNumber}
         >
           {showFormActive()}
         </Modal>
@@ -122,7 +133,7 @@ const Device = () => {
           withIcon={<BiPlus size={22} />}
         />
       </div>
-      <Table data={lists} />
+      <Table data={lists} head={HEAD_DEVICE} />
       {isLoadingDevice && (
         <div className="text-center">
           <Spinner color="text-success" />
