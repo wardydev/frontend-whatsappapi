@@ -10,6 +10,7 @@ import Modal from "../../src/components/Modal";
 import InputField from "../../src/components/InputField";
 import autoReply from "../../src/api/autoReply";
 import { AutoReplyContext } from "../../src/context/providers/AutoReplyProvider";
+import { STATUS_ACTION } from "../../src/utils/constants";
 
 const DetailAutoReply = () => {
   const replyContext = useContext(AutoReplyContext);
@@ -21,6 +22,14 @@ const DetailAutoReply = () => {
   const [loading, setLoading] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [idBtnDelete, setIdBtnDelete] = useState();
+  const [statusAction, setStatusAction] = useState(
+    STATUS_ACTION.ADD_AUTO_REPLY
+  );
+  const [editData, setEditData] = useState({
+    id: "",
+    body: "",
+    reply: "",
+  });
 
   const handleCloseModal = () => {
     replyContext.getDataByDeviceKey(deviceKey);
@@ -30,6 +39,7 @@ const DetailAutoReply = () => {
   };
 
   const addAutoReply = async () => {
+    setStatusAction(STATUS_ACTION.ADD_AUTO_REPLY);
     setLoading(true);
     try {
       const data = {
@@ -77,15 +87,59 @@ const DetailAutoReply = () => {
     }
   };
 
+  const handleEdit = (id, itemBody, itemReply) => {
+    setEditData({
+      ...editData,
+      id,
+      body: itemBody,
+      reply: itemReply,
+    });
+
+    setStatusAction(STATUS_ACTION.EDIT_AUTO_REPLY);
+    setBody(itemBody);
+    setReply(itemReply);
+    setShowModal(true);
+  };
+
+  const editDataAutoReply = async () => {
+    setLoading(true);
+    try {
+      const data = {
+        body,
+        reply,
+      };
+      await autoReply.put(`/update/${deviceKey}/${editData.id}`, data, {
+        headers: {
+          Authorization: `Bearer ${
+            typeof window !== "undefined" &&
+            JSON.parse(localStorage.getItem("TOKEN"))
+          }`,
+        },
+      });
+      setLoading(false);
+      replyContext.getDataByDeviceKey(deviceKey);
+      handleCloseModal();
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
   return (
     <LayoutDashboard>
       {showModal && (
         <Modal
           title="Tambahkan Auto Reply"
-          titleButton="Tambahkan"
+          titleButton={
+            statusAction === STATUS_ACTION.ADD_AUTO_REPLY ? "Tambahkan" : "Edit"
+          }
           closeModal={() => handleCloseModal()}
           isButtonDisabled={body !== "" && reply !== ""}
-          handleButtonModal={addAutoReply}
+          handleButtonModal={
+            statusAction === STATUS_ACTION.ADD_AUTO_REPLY
+              ? addAutoReply
+              : editDataAutoReply
+          }
           isLoadingbutton={loading}
         >
           <div className="mb-3">
@@ -139,7 +193,12 @@ const DetailAutoReply = () => {
                   <th scope="row">{item.body}</th>
                   <th scope="row">{item.reply}</th>
                   <th scope="row" className="d-flex align-items-center gap-3">
-                    <button className="btn btn-success">Edit</button>
+                    <button
+                      className="btn btn-success"
+                      onClick={() => handleEdit(item.id, item.body, item.reply)}
+                    >
+                      Edit
+                    </button>
                     <button
                       className="btn btn-danger"
                       onClick={() => handleDelete(item.id)}
