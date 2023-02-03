@@ -3,7 +3,8 @@ import { CodeBlock, atomOneLight } from "react-code-blocks";
 
 import LayoutDashboard from "../../src/components/LayoutDashboard";
 import { DocsContext } from "../../src/context/providers/DocsProvider";
-import { DATA_DOCS, STATUS_DOCS } from "../../src/utils/constants";
+import { DATA_DOCS } from "../../src/utils/constants";
+import withAuth from "../../src/hoc/withAuth";
 
 const Documentation = () => {
   const { docsContext } = useContext(DocsContext);
@@ -104,4 +105,4 @@ const Documentation = () => {
   );
 };
 
-export default Documentation;
+export default withAuth(Documentation);

@@ -1,0 +1,24 @@
+.container {
+    position: relative;
+}
+.profile:hover {
+    opacity: 0.7;
+}
+.card {
+    width: 180px;
+    min-height: 30px;
+    background-color: #f8f9fa;
+    position: absolute;
+    bottom: -115px;
+    right: 0;
+    z-index: 999;
+    padding: 1rem 1rem;
+    text-align: center;
+}
+.card > * {
+    opacity: 0.7;
+}
+.card > *:hover {
+    opacity: 0.7;
+    background-color: rgb(241, 237, 237);
+}

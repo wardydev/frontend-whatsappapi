@@ -6,7 +6,7 @@ const CardDevice = ({ count, title, imageSrc }) => {
     <div className="bg-white py-3 px-5 mt-5">
       <div className="d-flex align-items-center position-relative">
         <div className="ms-5 ps-4 text-center">
-          <h4 className={styles.count}>{count}</h4>
+          <h4 className={styles.count}>{count <= 0 ? "0" : count}</h4>
           <p className={styles.title}>{title}</p>
         </div>
         <img
