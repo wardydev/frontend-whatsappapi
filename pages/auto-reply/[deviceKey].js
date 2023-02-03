@@ -1,16 +1,17 @@
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
-import { BiPlusCircle } from "react-icons/bi";
+import { BiPlusCircle, BiTrashAlt, BiEdit } from "react-icons/bi";
 
 import Button from "../../src/components/Button";
 import LayoutDashboard from "../../src/components/LayoutDashboard";
 import Spinner from "../../src/components/Spinner";
-import useGetDataReply from "../../src/hooks/useGetDataReply";
 import Modal from "../../src/components/Modal";
 import InputField from "../../src/components/InputField";
 import autoReply from "../../src/api/autoReply";
 import { AutoReplyContext } from "../../src/context/providers/AutoReplyProvider";
 import { STATUS_ACTION } from "../../src/utils/constants";
+import withAuth from "../../src/hoc/withAuth";
+import Alert from "../../src/components/Alert";
 
 const DetailAutoReply = () => {
   const replyContext = useContext(AutoReplyContext);
@@ -30,6 +31,7 @@ const DetailAutoReply = () => {
     body: "",
     reply: "",
   });
+  const [alertMessage, setAlertMessage] = useState();
 
   const handleCloseModal = () => {
     replyContext.getDataByDeviceKey(deviceKey);
@@ -71,14 +73,21 @@ const DetailAutoReply = () => {
     setIdBtnDelete(id);
     setLoadingDelete(true);
     try {
-      await autoReply.delete(`/delete/${deviceKey && deviceKey}/${id}`, {
-        headers: {
-          Authorization: `Bearer ${
-            typeof window !== "undefined" &&
-            JSON.parse(localStorage.getItem("TOKEN"))
-          }`,
-        },
-      });
+      const res = await autoReply.delete(
+        `/delete/${deviceKey && deviceKey}/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${
+              typeof window !== "undefined" &&
+              JSON.parse(localStorage.getItem("TOKEN"))
+            }`,
+          },
+        }
+      );
+      setAlertMessage(res?.data?.message);
+      setTimeout(() => {
+        setAlertMessage(false);
+      }, 2000);
       setLoadingDelete(false);
       replyContext.getDataByDeviceKey(deviceKey);
     } catch (err) {
@@ -129,9 +138,9 @@ const DetailAutoReply = () => {
     <LayoutDashboard>
       {showModal && (
         <Modal
-          title="Tambahkan Auto Reply"
+          title="Add auto reply"
           titleButton={
-            statusAction === STATUS_ACTION.ADD_AUTO_REPLY ? "Tambahkan" : "Edit"
+            statusAction === STATUS_ACTION.ADD_AUTO_REPLY ? "Add" : "Edit"
           }
           closeModal={() => handleCloseModal()}
           isButtonDisabled={body !== "" && reply !== ""}
@@ -147,7 +156,7 @@ const DetailAutoReply = () => {
               label="Body"
               id="body"
               name="body"
-              placeholder="Tambahkan body"
+              placeholder="Add body"
               type="text"
               value={body}
               isRequired={true}
@@ -159,7 +168,7 @@ const DetailAutoReply = () => {
               label="Reply"
               id="reply"
               name="reply"
-              placeholder="Tambahkan reply"
+              placeholder="Add reply"
               type="text"
               value={reply}
               isRequired={true}
@@ -168,9 +177,14 @@ const DetailAutoReply = () => {
           </div>
         </Modal>
       )}
+      {alertMessage && (
+        <div className="my-3">
+          <Alert message={alertMessage} theme="alert-success" />
+        </div>
+      )}
       <div className="mb-3">
         <Button
-          title="Tambah"
+          title="Add"
           withIcon={<BiPlusCircle size={18} />}
           handleClick={() => setShowModal(true)}
         />
@@ -185,6 +199,11 @@ const DetailAutoReply = () => {
           </tr>
         </thead>
         <tbody>
+          {replyContext.data?.data?.data?.length === 0 && (
+            <td colspan="4">
+              <Alert message="There's no data" theme="alert-warning" />
+            </td>
+          )}
           {replyContext.data?.data?.data?.length !== 0 &&
             replyContext.data?.data?.data?.map((item, index) => {
               return (
@@ -197,7 +216,7 @@ const DetailAutoReply = () => {
                       className="btn btn-success"
                       onClick={() => handleEdit(item.id, item.body, item.reply)}
                     >
-                      Edit
+                      <BiEdit />
                     </button>
                     <button
                       className="btn btn-danger"
@@ -206,7 +225,7 @@ const DetailAutoReply = () => {
                       {loadingDelete && idBtnDelete == item.id ? (
                         <Spinner />
                       ) : (
-                        "Delete"
+                        <BiTrashAlt />
                       )}
                     </button>
                   </th>
@@ -224,7 +243,4 @@ const DetailAutoReply = () => {
   );
 };
 
-export default DetailAutoReply;
-<LayoutDashboard>
-  <div>Detail Auto Reply</div>
-</LayoutDashboard>;
+export default withAuth(DetailAutoReply);

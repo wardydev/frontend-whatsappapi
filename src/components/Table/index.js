@@ -35,12 +35,14 @@ const Table = ({ data, head }) => {
                     >
                       <BiTrash size={16} />
                     </button>
-                    <button
-                      className="btn btn-success"
-                      onClick={() => scanListDevice(list.number)}
-                    >
-                      <BiQrScan size={16} />
-                    </button>
+                    {list.status === "connecting" && (
+                      <button
+                        className="btn btn-success"
+                        onClick={() => scanListDevice(list.number)}
+                      >
+                        <BiQrScan size={16} />
+                      </button>
+                    )}
                   </td>
                 </tr>
               );

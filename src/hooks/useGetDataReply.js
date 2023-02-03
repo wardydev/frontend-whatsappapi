@@ -30,7 +30,7 @@ const useGetDataReply = (endpoint) => {
     getData();
   }, [endpoint]);
 
-  return { data, loading, error };
+  return { data, loading, error, getData };
 };
 
 export default useGetDataReply;

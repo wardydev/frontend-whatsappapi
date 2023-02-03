@@ -33,13 +33,6 @@ const MENUS = [
     menuChild: null,
   },
   {
-    title: "Subscribe",
-    route: "/subscribe",
-    icon: <BiCustomize size={24} />,
-    iconActive: <BiCustomize size={24} color="#14BA6D" />,
-    menuChild: null,
-  },
-  {
     title: "Device",
     route: "/device",
     icon: <BiDevices size={24} />,
@@ -64,16 +57,16 @@ const MENUS = [
         route: "/documentation",
         status: STATUS_DOCS.SEND_MESSAGE,
       },
-      {
-        title: "API",
-        route: "/documentation",
-        status: STATUS_DOCS.API,
-      },
-      {
-        title: "Device",
-        route: "/documentation",
-        status: STATUS_DOCS.DEVICE,
-      },
+      //{
+      //   title: "API",
+      //   route: "/documentation",
+      //   status: STATUS_DOCS.API,
+      // },
+      // {
+      //   title: "Device",
+      //   route: "/documentation",
+      //   status: STATUS_DOCS.DEVICE,
+      // },
     ],
   },
 ];
@@ -84,7 +77,7 @@ const DATA_DOCS = [
     title: "Send Message",
     activeMenu: STATUS_DOCS.SEND_MESSAGE,
     introduction:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores tenetur temporibus doloribus consequatur aut. Sapiente quidem magnam neque architecto? Dolorem eligendi, esse enim ",
+      "Send Message API to integrate your app or website to send messages via WhatsApp, such as otp codes, promotions, and notifications. This example request sends a message using your WhatsApp device; please connect your device first to use this feature. ",
     method: "POST",
     endpoint: "http://198.71.61.49:3333/api/send-message/${deviceKey}",
     body: `{
@@ -161,13 +154,13 @@ const DATA_DOCS = [
 
 const HEAD_DEVICE = [
   "NO",
-  "NAMA",
+  "NAME",
   "PHONE NUMBER",
   "DEVICE KEY",
   "STATUS",
   "ACTION",
 ];
-const HEAD_AUTOREPLY = ["NO", "NAMA", "NOMOR", "SETTING", "STATUS"];
+const HEAD_AUTOREPLY = ["NO", "NAME", "PHONE NUMBER", "SETTING", "STATUS"];
 
 const STATUS_ACTION = {
   ADD_AUTO_REPLY: "ADD_AUTO_REPLY",

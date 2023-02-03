@@ -32,7 +32,7 @@ const useGetDeviceData = (endpoint) => {
     getData();
   }, []);
 
-  return { data, loading, error };
+  return { data, loading, error, getData };
 };
 
 export default useGetDeviceData;

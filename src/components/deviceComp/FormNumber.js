@@ -15,11 +15,11 @@ const FormNumber = () => {
     <form>
       <div className="mb-3">
         <label htmlFor="phoneNumber" className="form-label fw-medium">
-          Tambahkan No. WA
+          Whatsapp number
         </label>
 
         <PhoneInput
-          placeholder="Enter phone number"
+          placeholder="Enter Whatsapp number"
           value={waNumber}
           onChange={setWaNumber}
           className={`${styles.input} rounded-lg`}
@@ -30,8 +30,8 @@ const FormNumber = () => {
       </div>
       <div className="mb-3">
         <InputField
-          label="Nama"
-          placeholder="Tambahkan Nama"
+          label="Name"
+          placeholder="Add name"
           type="text"
           isRequired={true}
           id="name"
@@ -59,6 +59,17 @@ const FormNumber = () => {
             id="openaiKey"
             name="openaiKey"
           />
+          <div className="mt-2">
+            <span>
+              You can find your Secret API key in{" "}
+              <a
+                target="_blank"
+                href="https://beta.openai.com/account/api-keys"
+              >
+                here
+              </a>{" "}
+            </span>
+          </div>
         </div>
       )}
     </form>

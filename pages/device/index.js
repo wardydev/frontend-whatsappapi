@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { BiPlus } from "react-icons/bi";
+import { BiPlusCircle } from "react-icons/bi";
 
 import Button from "../../src/components/Button";
 import FormNumber from "../../src/components/DeviceComp/FormNumber";
@@ -23,6 +23,7 @@ const Device = () => {
     waNumber,
     setWaNumber,
     name,
+    setName,
     deviceModalActive,
     resDeleted,
     isSuccess,
@@ -67,7 +68,7 @@ const Device = () => {
   const titleModal = () => {
     return (
       (deviceModalActive === STATUS_DEVICE_ACTIVE.INPUT_NUMBER &&
-        "Tambahkan Nomor Wa") ||
+        "Add Whatsapp number") ||
       (deviceModalActive === STATUS_DEVICE_ACTIVE.ADD_QR_CODE && "Scan QR Code")
     );
   };
@@ -75,18 +76,20 @@ const Device = () => {
   const addDevice = () => {
     setIsShowModal(true);
     getDataMyPackage();
+    setWaNumber("");
+    setName("");
   };
 
-  useEffect(() => {
-    getListsDevice();
-  }, []);
-
   const handleCloseModal = () => {
+    count.getData();
     setIsShowModal(false);
     getListsDevice();
     setDeviceModalActive(STATUS_DEVICE_ACTIVE.INPUT_NUMBER);
     setWaNumber("");
   };
+  useEffect(() => {
+    getListsDevice();
+  }, []);
 
   return (
     <LayoutDashboard>
@@ -112,14 +115,14 @@ const Device = () => {
       <div className="mb-4 row">
         <div className="col-6">
           <CardDevice
-            count={count.data.data?.total}
+            count={count?.data?.data?.total}
             title="Device"
             imageSrc="./device.svg"
           />
         </div>
         <div className="col-6">
           <CardDevice
-            count={count.data.data?.connect}
+            count={count?.data?.data?.connect}
             title="Connect"
             imageSrc="./connect.svg"
           />
@@ -127,10 +130,10 @@ const Device = () => {
       </div>
       <div className="mb-3">
         <Button
-          title="Tambah"
+          title="Add Device"
           handleClick={addDevice}
           isFullWidth={false}
-          withIcon={<BiPlus size={22} />}
+          withIcon={<BiPlusCircle size={22} />}
         />
       </div>
       <Table data={lists} head={HEAD_DEVICE} />

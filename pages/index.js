@@ -1,39 +1,61 @@
 import React, { useEffect, useState } from "react";
-import auth from "../src/api/auth";
+import axios from "axios";
+
 import LayoutDashboard from "../src/components/LayoutDashboard";
 import withAuth from "../src/hoc/withAuth";
+import Image from "next/image";
+import CardHome from "../src/components/CardHome";
+import Accordion from "../src/components/Accordion";
 
-const Home = ({ token }) => {
-  const [user, setUser] = useState({});
-
-  const getUserInfo = async () => {
+const Home = () => {
+  const [data, setData] = useState({});
+  const getData = async () => {
     try {
-      const res = await auth.get("me", {
+      const res = await axios.get("http://198.71.61.49:3333/myPackage", {
         headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("TOKEN"))}`,
+          Authorization: `Bearer ${
+            typeof window !== "undefined" &&
+            JSON.parse(localStorage.getItem("TOKEN"))
+          }`,
         },
       });
-      setUser(res?.data);
+      setData(res.data);
     } catch (err) {
-      // temporary error message
       console.log(err);
     }
   };
 
   useEffect(() => {
-    getUserInfo();
+    getData();
+    console.log(data);
   }, []);
-
   return (
     <LayoutDashboard>
-      <ion-icon name="heart"></ion-icon>
-      <ul>
-        <li>User Info</li>
-        <li>{user.id}</li>
-        <li>{user.name}</li>
-        <li>{user.email}</li>
-        <li>{user.updatedAt}</li>
-      </ul>
+      <div className="row mt-5">
+        <div className="col-6">
+          <div className="card" style={{ minHeight: 130 }}>
+            <CardHome
+              title="My Package"
+              value="Basic"
+              img="./static/images/package-illustration.svg"
+            />
+          </div>
+        </div>
+        <div className="col-6">
+          <div className="card">
+            <div className="card-body">
+              <CardHome
+                title="Expired At"
+                value="20 Januari 2022"
+                img="./static/images/date-illustration.svg"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="col-12 mt-3">
+          <Accordion />
+        </div>
+      </div>
     </LayoutDashboard>
   );
 };

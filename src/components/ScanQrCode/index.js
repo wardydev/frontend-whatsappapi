@@ -29,7 +29,7 @@ const ScanQrCode = ({ data, closeModal }) => {
   return (
     <div className="text-center">
       <div>
-        <span className="fw-medium">Scan QR Code Dibawah Ini</span>
+        <span className="fw-medium">Scan the QR code below</span>
       </div>
       <div className={`card my-4 ${styles.camera}`}>
         <Image src={data.qr} width={300} height={300} alt="qr-code" />
