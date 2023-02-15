@@ -67,7 +67,7 @@ const DetailAutoReply = () => {
 
   useEffect(() => {
     replyContext.getDataByDeviceKey(deviceKey);
-  }, [deviceKey]);
+  }, [deviceKey, autoReply]);
 
   const handleDelete = async (id) => {
     setIdBtnDelete(id);

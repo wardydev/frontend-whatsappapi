@@ -89,7 +89,7 @@ const Device = () => {
   };
   useEffect(() => {
     getListsDevice();
-  }, []);
+  }, [getListsDevice]);
 
   return (
     <LayoutDashboard>

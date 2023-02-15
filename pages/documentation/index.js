@@ -14,9 +14,9 @@ const Documentation = () => {
   });
 
   const codeSnippetCompoent = () => {
-    return filteredDocsComponent.map((doc) => {
+    return filteredDocsComponent.map((doc, index) => {
       return (
-        <div className="p-3">
+        <div className="p-3" key={index}>
           <div className="mb-3">
             <h4>Code Snippet</h4>
           </div>
